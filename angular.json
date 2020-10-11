@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash","rxjs-compat"
+           ],
             "outputPath": "dist/Hacker-News",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -26,10 +29,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
-            "allowedCommonJsDependencies": [
-              "lodash"
-           ]
+            "scripts": []          
           },
           "configurations": {
             "production": {
