@@ -22,7 +22,7 @@ export class HomeGraphComponent implements OnInit {
 
   ngOnInit(): void {
     this._fetchNewsService.newsReceived.subscribe( 
-      (newdData : Result[]) =>{debugger
+      (newdData : Result[]) =>{
         let tempUpdate=[];
         let tempId =[];
         if(newdData!=null){
@@ -34,7 +34,6 @@ export class HomeGraphComponent implements OnInit {
       this.renderTable(tempUpdate,tempId);
       this.update=tempUpdate;
       this.id=tempId;
-      debugger
       } );
   }
   
