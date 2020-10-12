@@ -9,8 +9,8 @@ import {Result} from './bean/NewsRequest'
 })
 export class FetchNewsService {
   newsReceived = new EventEmitter<Result[]>();
-  private _url: string = "http://hn.algolia.com/api/v1/search?tags=front_page";
-  private _skipUrl : string ="http://hn.algolia.com/api/v1/search?&page=";
+  private _url: string = "https://hn.algolia.com/api/v1/search?tags=front_page";
+  private _skipUrl : string ="https://hn.algolia.com/api/v1/search?&page=";
   constructor(private http:HttpClient) { }
 
   getNews(): Observable<NewsRequest>{
