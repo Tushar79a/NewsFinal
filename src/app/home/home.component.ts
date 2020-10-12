@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit{
     } else{
       this._fetchNewsService.SkipPage( this.page ).subscribe(data => {
         this.news = this.fetchdata( data.hits );
+        this._fetchNewsService.newsReceived.emit( this.news ) ;
       },
       error => this.errorMsg = error);
     }
@@ -116,7 +117,6 @@ export class HomeComponent implements OnInit{
     this.hideArray.push(id);
     this.sessionStorage.setItem('vote',JSON.stringify( this.hideArray ));
     this.fetchdata(this.news);
-    this._fetchNewsService.newsReceived.emit( this.news );
     if( this.news.length <= 0 )
     {
       this.nextPage( this.page ) ;
@@ -138,7 +138,6 @@ export class HomeComponent implements OnInit{
     this.updateArray.push( temp );
     this.sessionStorage.setItem('update',JSON.stringify( this.updateArray ));
     this.fetchdata( this.news );
-    this._fetchNewsService.newsReceived.emit( this.news );
   }
 
   fetchdata(val : Result[])
@@ -177,6 +176,7 @@ export class HomeComponent implements OnInit{
         } 
       }
     }
+    this._fetchNewsService.newsReceived.emit( this.news );
     return val;   
   }
 }

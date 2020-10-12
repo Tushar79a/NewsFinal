@@ -21,10 +21,6 @@ td.left {
   padding: 8px;
 }
 
-/* tr:nth-child(even) {
-  background-color: #dddddd;
-} */
-
 .table-sticky {
   background:orange;
   opacity: 1;
@@ -53,16 +49,11 @@ span.right {
 a:hover {
   color: blue;
 }
-
 a.disabled {
   pointer-events: none;
   cursor: default;
   color: grey;
 
-}
-
-div.hidden {
-  display: none;
 }
 
 
