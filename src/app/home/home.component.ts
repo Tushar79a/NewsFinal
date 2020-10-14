@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import{FetchNewsService} from '../fetch-news.service' 
+import{FetchNewsService} from '../fetch-news.service'
 import {Cache} from '../bean/Cache'
 import {Result} from '../bean/NewsRequest'
 import { plainToClass } from "class-transformer";
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit{
 
   constructor(private _fetchNewsService : FetchNewsService) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     let currPage = this.sessionStorage.getItem('page');
     if( currPage!=null )
     {
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit{
     {
       this.page = 1;
     }
-    if( this.page==1 ) { 
+    if( this.page==1 ) {
     this._fetchNewsService.getNews().subscribe( data => {
        this.news = this.fetchdata(data.hits);
        this._fetchNewsService.newsReceived.emit( this.news ) ;
@@ -50,16 +50,16 @@ export class HomeComponent implements OnInit{
       },
       error => this.errorMsg = error);
     }
-    
+
   }
   // to jump to previous page
-  previousPage(currentPage: number) {
+  previousPage(currentPage: number) {debugger
     if(this.page>1)
     {
       this.isActive = true;
       this.page = currentPage-1;
       this.sessionStorage.setItem('page',this.page.toString());
-      if( this.page==1 )  {        
+      if( this.page==1 )  {
         this._fetchNewsService.getNews().subscribe( data => {
           this.news = this.fetchdata(data.hits);
           this._fetchNewsService.newsReceived.emit( this.news ) ;
@@ -77,22 +77,22 @@ export class HomeComponent implements OnInit{
       error => this.errorMsg = error);
     }
   }
-    
+
   }
  //to jump to next page
-  nextPage(currentPage: number) {
+  nextPage(currentPage: number) {debugger
     this.isActive = true;
     this.page = currentPage+1;
     this.sessionStorage.setItem('page',this.page.toString());
     if(this.page!=1)
     {
-      this._fetchNewsService.SkipPage( currentPage ).subscribe(data => {
+      this._fetchNewsService.SkipPage( this.page ).subscribe(data => {
         this.news = this.fetchdata( data.hits );
-        this.isActive = false;      
+        this.isActive = false;
       },
       error => this.errorMsg = error);
     }
-    
+
   }
 
   //To remove duplicate id
@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit{
     for (let i=0; i < checkArrays.length; ++i)
      {
       if (checkArrays[i]['id']== id) {
-        checkArrays.splice(i, 1); 
+        checkArrays.splice(i, 1);
       }
     }
   }
@@ -129,7 +129,7 @@ export class HomeComponent implements OnInit{
     temp.id= id;
     temp.value=count+1;
     let cache = this.sessionStorage.getItem('update');
-    
+
     if( cache != null )
     {
       this.updateArray  =  JSON.parse( cache );
@@ -146,7 +146,7 @@ export class HomeComponent implements OnInit{
     let hidecache= this.sessionStorage.getItem('vote');
 
     let temp = plainToClass(Cache,<Cache[]> JSON.parse( voteCache ));
-    
+
     if(temp !=null &&  val !=null )
     {
       for (let i=0; i < temp.length; ++i)
@@ -157,12 +157,12 @@ export class HomeComponent implements OnInit{
           {
             val[j]['points'] = temp[i]['value'];
           }
-        } 
+        }
       }
     }
     let hidetemp = plainToClass(Array,<number> JSON.parse(hidecache));
     //for fetch hide data
-    
+
     if( hidetemp !=null &&  val !=null )
     {
       for (let i=0; i < hidetemp.length; ++i)
@@ -171,12 +171,12 @@ export class HomeComponent implements OnInit{
         {
           if(val[j]['objectID']==hidetemp[i])
           {
-            val.splice(j, 1); 
+            val.splice(j, 1);
           }
-        } 
+        }
       }
     }
     this._fetchNewsService.newsReceived.emit( this.news );
-    return val;   
+    return val;
   }
 }
