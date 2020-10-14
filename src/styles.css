@@ -1,3 +1,61 @@
 body {
     overflow-x: hidden; /* Hide horizontal scrollbar */
   }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+  }
+
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+  }
+  td.left {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  .table-sticky {
+    background:orange;
+    opacity: 1;
+  }
+
+  .arrow-up {
+    font-size:15px;
+    color: black;
+  }
+
+  .grey {
+    color: grey;
+  }
+
+
+  span.right {
+    position: absolute;
+    right: -40px;
+    width: 200px;
+    height: 120px;
+  }
+
+  .orange  {
+    color: orange;
+  }
+  a:hover {
+    color: blue;
+  }
+  a.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: grey;
+
+  }

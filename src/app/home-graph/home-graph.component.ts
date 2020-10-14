@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
-import { Color, Label ,} from 'ng2-charts';
-import{FetchNewsService} from '../fetch-news.service' ;
-import {Result} from '../bean/NewsRequest';
+import { Color, Label } from 'ng2-charts';
+import{ FetchNewsService } from '../fetch-news.service' ;
+import { Result } from '../bean/NewsRequest';
 
 @Component({
   selector: 'app-home-graph',

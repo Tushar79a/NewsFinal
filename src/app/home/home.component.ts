@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit{
   public updateArray = [];
   public hideArray = [];
   public isActive : boolean = false;
-  public isGraphActive : boolean =  true;
 
   constructor(private _fetchNewsService : FetchNewsService) { }
 
@@ -37,16 +36,13 @@ export class HomeComponent implements OnInit{
     if( this.page==1 ) {
     this._fetchNewsService.getNews().subscribe( data => {
        this.news = this.fetchdata(data.hits);
-       this._fetchNewsService.newsReceived.emit( this.news ) ;
-       if( this.news!=null && this.news.length > 0 ) {
-        this.isGraphActive = false;
-      }
+      //  this._fetchNewsService.newsReceived.emit( this.news ) ;
      },
        error => this.errorMsg = error);
     } else{
       this._fetchNewsService.SkipPage( this.page ).subscribe(data => {
         this.news = this.fetchdata( data.hits );
-        this._fetchNewsService.newsReceived.emit( this.news ) ;
+        // this._fetchNewsService.newsReceived.emit( this.news ) ;
       },
       error => this.errorMsg = error);
     }
@@ -63,12 +59,9 @@ export class HomeComponent implements OnInit{
         this._fetchNewsService.getNews().subscribe( data => {
           this.news = this.fetchdata(data.hits);
           this._fetchNewsService.newsReceived.emit( this.news ) ;
-          if( this.news!=null && this.news.length > 0 ) {
-           this.isGraphActive = false;
-         }
          this.isActive = false;
         },
-          error => console.log(error))
+        error => this.errorMsg = error)
       } else {
       this._fetchNewsService.SkipPage( this.page ).subscribe(data => {
         this.news = this.fetchdata( data.hits );

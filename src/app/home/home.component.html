@@ -18,10 +18,10 @@
          </td>
       </tr>
     </tbody>
-  </table> 
+  </table>
   <div>
-<span class="right" > 
-  <a class="orange" [class.disabled]="isActive || page==1" href="javascript:void(0)"  (click)="previousPage(page)">Previous</a> <span class="orange"> | </span>   
+<span class="right" >
+  <a class="orange" [class.disabled]="isActive || page==1" href="javascript:void(0)"  (click)="previousPage(page)">Previous</a> <span class="orange"> | </span>
   <a [class.disabled]="isActive" href="javascript:void(0)" class="orange" (click)= "nextPage(page)">Next</a>
   <!-- <small class = "margin-left: 20%" >{{page}}</small>  -->
 </span>
@@ -29,6 +29,6 @@
 
 </div>
 
-<div *ngIf=[isGraphActive] class="py-4">
+<div  class="py-4">
   <app-home-graph></app-home-graph>
 </div>
