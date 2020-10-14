@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit{
 
   }
   // to jump to previous page
-  previousPage(currentPage: number) {debugger
+  previousPage(currentPage: number) {
     if(this.page>1)
     {
       this.isActive = true;
@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit{
 
   }
  //to jump to next page
-  nextPage(currentPage: number) {debugger
+  nextPage(currentPage: number) {
     this.isActive = true;
     this.page = currentPage+1;
     this.sessionStorage.setItem('page',this.page.toString());
@@ -176,7 +176,7 @@ export class HomeComponent implements OnInit{
         }
       }
     }
-    this._fetchNewsService.newsReceived.emit( this.news );
+    this._fetchNewsService.newsReceived.emit( val );
     return val;
   }
 }

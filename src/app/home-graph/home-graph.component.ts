@@ -21,7 +21,7 @@ export class HomeGraphComponent implements OnInit {
   constructor(private _fetchNewsService : FetchNewsService) { }
 
   ngOnInit(): void {
-    this._fetchNewsService.newsReceived.subscribe( 
+    this._fetchNewsService.newsReceived.subscribe(
       (newdData : Result[]) =>{
         let tempUpdate=[];
         let tempId =[];
@@ -36,13 +36,9 @@ export class HomeGraphComponent implements OnInit {
       this.id=tempId;
       } );
   }
-  
+
   renderTable(update: Array<number> , id: Array<string>)
   {
-    if( update.length > 0 || id.length > 0 )
-    {
-      
-    }
     this.lineChartData = [{ data: update, label: 'Id - Votes' }]
     this.lineChartLabels = id;
   }
