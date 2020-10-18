@@ -1,6 +1,6 @@
 import { Injectable,EventEmitter } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NewsRequest } from './bean/NewsRequest'
 import {Result} from './bean/NewsRequest'
 
@@ -14,12 +14,11 @@ export class FetchNewsService {
   constructor(private http:HttpClient) { }
 
   getNews(): Observable<NewsRequest>{
-    return  this.http.get<NewsRequest>( this._url ); 
+    return  this.http.get<NewsRequest>( this._url );
   }
 
   SkipPage(page : number ): Observable<NewsRequest>{
-    return  this.http.get<NewsRequest>( this._skipUrl+page );
-   
+      return  this.http.get<NewsRequest>( this._skipUrl+page );
   }
 
 

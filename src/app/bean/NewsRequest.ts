@@ -1,8 +1,8 @@
-export  class NewsRequest {
+export  interface NewsRequest {
     hits: Result[]
   }
-  
- export class Result {
+
+ export interface Result {
 
   created_at : string;
   title: string;
@@ -10,18 +10,8 @@ export  class NewsRequest {
   author: string;
   news: string;
   num_comments :number
-  public points: number;
+  points: number;
   objectID: number;
   isHide :boolean;
 
-  constructor (created_at : string,
-  title: string,
-  url: string,
-  author: string,
-  news: string,
-  num_comments :number,
-  points: number,
-  objectID: number,
-  isHide :boolean){}
   }
- 

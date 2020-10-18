@@ -60,8 +60,10 @@ export class HomeComponent implements OnInit{
           this.news = this.fetchdata(data.hits);
           this._fetchNewsService.newsReceived.emit( this.news ) ;
          this.isActive = false;
-        },
-        error => this.errorMsg = error)
+        },(error) => {                              //Error callback
+          console.log(error);
+          this.errorMsg = "error";
+        })
       } else {
       this._fetchNewsService.SkipPage( this.page ).subscribe(data => {
         this.news = this.fetchdata( data.hits );
@@ -69,21 +71,26 @@ export class HomeComponent implements OnInit{
       },
       error => this.errorMsg = error);
     }
+  }else {
+    this.errorMsg="Invalid page";
   }
 
   }
  //to jump to next page
-  nextPage(currentPage: number) {
+  nextPage(currentPage: number) {debugger
     this.isActive = true;
     this.page = currentPage+1;
     this.sessionStorage.setItem('page',this.page.toString());
     if(this.page!=1)
     {
-      this._fetchNewsService.SkipPage( this.page ).subscribe(data => {
+      this._fetchNewsService.SkipPage( -3).subscribe(data => {
         this.news = this.fetchdata( data.hits );
         this.isActive = false;
       },
-      error => this.errorMsg = error);
+      (error) => {                              //Error callback
+        console.log(error);
+        this.errorMsg = "error";
+      })
     }
 
   }
