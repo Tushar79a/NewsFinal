@@ -3,11 +3,4 @@ export class Cache {
   value: number;
   constructor( ) {}
 
-  getId() { 
-    return this.id; 
-  } 
-
-  getValue() { 
-    return this.value; 
-  }
 }
