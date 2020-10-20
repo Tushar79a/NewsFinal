@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FetchNewsService } from '../fetch-news.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('HomeComponent', () => {
@@ -10,9 +11,9 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [HttpClientModule,RouterTestingModule],
       declarations: [HomeComponent],
-      providers: [{ provide: FetchNewsService }],
+      providers: [{ provide: FetchNewsService}],
     }).compileComponents();
   });
 
@@ -33,26 +34,9 @@ describe('HomeComponent', () => {
       .subscribe((result) => expect(result.hits.length).toBeGreaterThan(0));
   });
 
-  it(
-    'to check negative page ',
-    waitForAsync(() => {
-      let _fetchNewsService = fixture.debugElement.injector.get(
-        FetchNewsService
-      );
-      let msg = '';
-      _fetchNewsService.SkipPage(-2).subscribe(
-        (data) => {
-          msg = 'no error';
-        },
-        (error) => {
-          console.log(error);
-          msg = 'error';
-        }
-      );
+  it('refreshData functionality ', () => {
+    component.refreshData(-2);
+    expect(component.errorMsg).toEqual("Wrong page");
+  });
 
-      fixture.whenStable().then(() => {
-        expect(msg).toEqual('error');
-      });
-    })
-  );
 });

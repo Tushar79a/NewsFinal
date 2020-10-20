@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FetchNewsService } from '../fetch-news.service';
 import { Cache } from '../bean/Cache';
 import { Result } from '../bean/NewsRequest';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -24,30 +25,55 @@ export class HomeComponent implements OnInit {
   public hideArray = [];
   public isActive: boolean = false;
 
-  constructor(private _fetchNewsService: FetchNewsService) {}
+  constructor(
+    private _fetchNewsService: FetchNewsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    let currPage = this.sessionStorage.getItem('page');
-    if (currPage != null) {
-      this.page = Number(currPage);
-    } else {
-      this.page = 1;
-    }
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      let id = parseInt(params.get('id'));
+      this.page = id;
+    });
+    this.renderTable();
+  }
+
+  renderTable() {
     if (this.page == 1) {
       this._fetchNewsService.getNews().subscribe(
         (data) => {
           this.news = this._fetchNewsService.fetchdata(data.hits);
+          this.isActive = false;
         },
-        (error) => (this.errorMsg = error)
+        (error) => {
+          this.errorMsg = error;
+          console.log(this.errorMsg);
+        }
       );
     } else {
       this._fetchNewsService.SkipPage(this.page).subscribe(
         (data) => {
           this.news = this._fetchNewsService.fetchdata(data.hits);
+          this.isActive = false;
         },
-        (error) => (this.errorMsg = error)
+        (error) => {
+          this.errorMsg = error;
+          console.log(this.errorMsg);
+        }
       );
     }
+  }
+
+  //To fetch data
+  refreshData(pageNo: number)
+  {
+    if(pageNo>0) {
+      this.router.navigate(['../', pageNo], { relativeTo: this.route });
+      this.renderTable();
+      } else {
+        this.errorMsg = "Wrong page"
+      }
   }
 
   // to jump to previous page
@@ -55,41 +81,15 @@ export class HomeComponent implements OnInit {
     if (this.page > 1) {
       this.isActive = true;
       this.page = currentPage - 1;
-      this.sessionStorage.setItem('page', this.page.toString());
-      if (this.page == 1) {
-        this._fetchNewsService.getNews().subscribe(
-          (data) => {
-            this.news = this._fetchNewsService.fetchdata(data.hits);
-            this._fetchNewsService.newsReceived.emit(this.news);
-            this.isActive = false;
-          },
-          (error) => (this.errorMsg = error)
-        );
-      } else {
-        this._fetchNewsService.SkipPage(this.page).subscribe(
-          (data) => {
-            this.news = this._fetchNewsService.fetchdata(data.hits);
-            this.isActive = false;
-          },
-          (error) => (this.errorMsg = error)
-        );
-      }
+      this.refreshData(this.page);
+
     }
   }
   //to jump to next page
   nextPage(currentPage: number) {
     this.isActive = true;
     this.page = currentPage + 1;
-    this.sessionStorage.setItem('page', this.page.toString());
-    if (this.page != 1) {
-      this._fetchNewsService.SkipPage(this.page).subscribe(
-        (data) => {
-          this.news = this._fetchNewsService.fetchdata(data.hits);
-          this.isActive = false;
-        },
-        (error) => (this.errorMsg = error)
-      );
-    }
+    this.refreshData(this.page);
   }
 
   //To hide data
@@ -112,7 +112,6 @@ export class HomeComponent implements OnInit {
     temp.id = id;
     temp.value = count + 1;
     let cache = this.sessionStorage.getItem('update');
-
     if (cache != null) {
       this.updateArray = JSON.parse(cache);
       this._fetchNewsService.checkDuplicacy(this.updateArray, temp.id);
